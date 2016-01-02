@@ -12,6 +12,6 @@ install:
   - tar -zxvf /tmp/mummer.tar.gz -C /tmp/
   - make install -C /tmp/MUMmer3.23/
   - mkdir /tmp/testdir/
-
+  
 script: 
   - python myunittest.py
