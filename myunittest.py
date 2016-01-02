@@ -1,4 +1,4 @@
-# Example usage : python myunittest.py
+# Example usage : python myunittest.py -a  /Users/kakitlam/Desktop/allinone/experimentBench/MUMmer3.23/ -f /Users/kakitlam/Desktop/baseline/tmp/
 
 from Bio import SeqIO
 from Bio.Alphabet import generic_dna
@@ -19,8 +19,8 @@ class baselineAlgoTest(unittest.TestCase):
     def setUp(self):
         print "Set up : Started"
         
-        self.folderName = "/tmp/testdir//"
-        self.mummerLink = "/tmp/MUMmer3.23/"
+        self.folderName = "/tmp/testdir/"
+        self.mummerLink = "/Users/kakitlam/Desktop/allinone/experimentBench/MUMmer3.23/"
         self.readsFilename = "LR.fasta"
         self.contigsFilename = "mFixed2.fasta"
         self.outputHeader = "outputHeader"
@@ -146,3 +146,4 @@ def main():
     
 if __name__ == '__main__':
     main()
+

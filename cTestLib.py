@@ -25,15 +25,13 @@ def assignCoverageFromDataList(G, dataList,  folderName, contigFileName):
         contigName = topRecord[-2]
         G.dicOfContigNodes[contigName].readToContigCount +=  1
 
-def assignCoverageFromHeader(G, folderName, contigFileName):
+def assignCoverageFromHeader(G, folderName, contigFileName, targetToSourceContigsNamesDic):
     assignLengthToContigNodes(G, folderName, contigFileName)
-    for record in SeqIO.parse(folderName + contigFileName, "fasta"): 
-        G.dicOfContigNodes[record.id].readToContigCount = record.id.split("_")[5] * G.dicOfContigNodes[record.id].contigLength/200
+    for targetName in targetToSourceContigsNamesDic: 
+        G.dicOfContigNodes[targetName].readToContigCount = targetToSourceContigsNamesDic[targetName].split("_")[5] * G.dicOfContigNodes[targetName].contigLength/200
 
 def calculateConfidenceScore(G, condenseCandidatesList):
     scoreList = []
-    # Check the math ...
-    # assert(False)
 
     for eachcandidate in condenseCandidatesList:
         infoList = eachcandidate.split("~") 
@@ -48,5 +46,8 @@ def calculateConfidenceScore(G, condenseCandidatesList):
         pvalue = scipy.stats.binom_test(xTmp, n=nTmp, p=pTmp)
         scoreList.append([ eachcandidate , 1 - pvalue, mScore])
 
-    
     return scoreList
+
+
+
+
