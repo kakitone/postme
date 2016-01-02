@@ -42,6 +42,7 @@ class baselineAlgoTest(unittest.TestCase):
         self.createSimpleFasta()   
         dataList = alignmentLib.extractRead2Contig(self.folderName, self.mummerLink, self.readsFilename, \
                     self.contigsFilename, self.splitNum, self.outputHeader, self.parallelNum, self.debug)
+        print dataList
         assert(dataList == [[11, 80, 1, 70, 70, 70, 100.0, 100, 70, 'ContigDummy', 'ReadDummy']])
     
     def test_findConnectingReadsList(self):
