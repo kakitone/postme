@@ -126,20 +126,20 @@ def readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contig
             readName = gapRecord[0][-1]
 
             if s < e:
-                gapContent = readsDic[readName].seq[s:e] if readOrientation == "p" else readsDic[readName].reverse_complement().seq[s:e]
+                gapContent = readsDic[readName].seq[s:e-1] if readOrientation == "p" else readsDic[readName].reverse_complement().seq[s:e-1]
                 nextContigResidual = contigsDic[nextContigName].seq if nextContigSide == "p" else contigsDic[nextContigName].reverse_complement().seq
             else:
                 gapContent = ""
-                nextContigResidual = contigsDic[nextContigName].seq[s-e:] if nextContigSide == "p" else contigsDic[nextContigName].reverse_complement().seq[s-e:]
+                nextContigResidual = contigsDic[nextContigName].seq[s-e + 1:] if nextContigSide == "p" else contigsDic[nextContigName].reverse_complement().seq[s-e+ 1:]
 
             newContig = newContig + gapContent + nextContigResidual
             
-        improvedList.append(SeqRecord(Seq(str(newContig), generic_dna), id="Segkk" + str(len(improvedList))))
+        improvedList.append(SeqRecord(Seq(str(newContig), generic_dna), description="", id="Segkk" + str(len(improvedList))))
 
     SeqIO.write(improvedList, folderName + "improved.fasta" , "fasta")
 
 def cutOffToFormMergeList(scoreList):
-    mScoreThres, conScoreThres  = 2, 0.95 
+    mScoreThres, conScoreThres  = 1, 0.95 
     mergeList = []
     for eachPotentialMerge in scoreList: 
         if eachPotentialMerge[-1] > mScoreThres or (eachPotentialMerge[-1] == mScoreThres and eachPotentialMerge[-2] >= conScoreThres ) :

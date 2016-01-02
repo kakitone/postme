@@ -50,11 +50,3 @@ def calculateConfidenceScore(G, condenseCandidatesList):
 
     
     return scoreList
-
-
-
-
-
-
-
-
