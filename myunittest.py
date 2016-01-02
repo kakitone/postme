@@ -20,7 +20,7 @@ class baselineAlgoTest(unittest.TestCase):
         print "Set up : Started"
         
         self.folderName = "/tmp/testdir/"
-        self.mummerLink = "/Users/kakitlam/Desktop/allinone/experimentBench/MUMmer3.23/"
+        self.mummerLink = "/tmp/MUMmer3.23/"
         self.readsFilename = "LR.fasta"
         self.contigsFilename = "mFixed2.fasta"
         self.outputHeader = "outputHeader"
@@ -42,7 +42,6 @@ class baselineAlgoTest(unittest.TestCase):
         self.createSimpleFasta()   
         dataList = alignmentLib.extractRead2Contig(self.folderName, self.mummerLink, self.readsFilename, \
                     self.contigsFilename, self.splitNum, self.outputHeader, self.parallelNum, self.debug)
-        print dataList
         assert(dataList == [[11, 80, 1, 70, 70, 70, 100.0, 100, 70, 'ContigDummy', 'ReadDummy']])
     
     def test_findConnectingReadsList(self):
