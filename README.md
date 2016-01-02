@@ -1,4 +1,4 @@
-# postme
+# POSTME
 POSTME : POSTprocessing MEtagenomics assembly with hybrid data.
 
 To use the tool, use the following command, 
