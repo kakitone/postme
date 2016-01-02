@@ -20,7 +20,7 @@ import houseKeeperLib
 import rankingLib
 import readConnectivityLib
 
-def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, useSpades, splitNum, parallelNum, debug):
+def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, useSpades):
     outputHeader, splitNum, parallelNum, debug = "readToContigHeader",  20, 4, False    
     contigsFilename, readsFilename= "tmp" + inputContigsFilename , "tmp" + inputReadsFilename
 

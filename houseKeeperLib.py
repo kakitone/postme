@@ -8,7 +8,7 @@ from Bio.SeqRecord import SeqRecord
 
 def transformFileHeaders(folderName, inputFastaName, outputFastaName):
     targetToSourceNameDic = {}
-    targetList = list(SeqIO.parse(folderName + filename, "fasta"))
+    targetList = list(SeqIO.parse(folderName + inputFastaName, "fasta"))
     for eachRecord in targetList:
     	tmpName = "Seg" + str(len(targetToSourceNameDic))
         targetToSourceNameDic[tmpName]  = eachRecord.id
