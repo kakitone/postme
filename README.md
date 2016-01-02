@@ -11,4 +11,6 @@ To use the tool, use the following command,
         
         
 Unit tests are continuously tested on Travis CI and the current build status is  
-https://travis-ci.org/kakitone/postme.svg?branch=master
+![alt text](https://travis-ci.org/kakitone/postme.svg?branch=master "Current build status")
+
+
