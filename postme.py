@@ -23,7 +23,8 @@ import readConnectivityLib
 def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, useSpades):
     outputHeader, splitNum, parallelNum, debug = "readToContigHeader",  20, 20, True 
     contigsFilename, readsFilename= "tmp" + inputContigsFilename , "tmp" + inputReadsFilename
-
+    mScoreThres, conScoreThres = 2, 0.95
+    
     targetToSourceContigsNamesDic = houseKeeperLib.transformFileHeaders(folderName, inputContigsFilename, contigsFilename)
     targetToSourceReadsNamesDic = houseKeeperLib.transformFileHeaders(folderName, inputReadsFilename, readsFilename)
 
@@ -46,7 +47,7 @@ def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, u
     
     scoreList = cTestLib.calculateConfidenceScore(G, condenseCandidatesList)
     
-    rankingLib.rankAndMerge(folderName,contigsNamesList, contigsFilename, readsFilename, scoreList, contigGapReadLookUpDic)
+    rankingLib.rankAndMerge(folderName,contigsNamesList, contigsFilename, readsFilename, scoreList, contigGapReadLookUpDic, mScoreThres, conScoreThres)
 
 parser = argparse.ArgumentParser(description='PostMe')
 parser.add_argument('-o', '--outputFolder', help= 'Output folder path', required=False)

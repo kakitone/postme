@@ -124,9 +124,7 @@ def readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contig
                 assert(False)
 
             readName = gapRecord[0][-1]
-            print "s, e : " , s, e, sInfo, eInfo, len(eachPath)
-            #print gapRecord
-
+            
             if s < e:
                 gapContent = readsDic[readName].seq[s:e-1] if readOrientation == "p" else readsDic[readName].reverse_complement().seq[s:e-1]
                 nextContigResidual = contigsDic[nextContigName].seq if nextContigSide == "p" else contigsDic[nextContigName].reverse_complement().seq
@@ -140,18 +138,17 @@ def readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contig
 
     SeqIO.write(improvedList, folderName + "improved.fasta" , "fasta")
 
-def cutOffToFormMergeList(scoreList):
-    mScoreThres, conScoreThres  = 2, 0.95 
+def cutOffToFormMergeList(scoreList, mScoreThres, conScoreThres ):
     mergeList = []
     for eachPotentialMerge in scoreList: 
         if eachPotentialMerge[-1] > mScoreThres or (eachPotentialMerge[-1] == mScoreThres and eachPotentialMerge[-2] >= conScoreThres ) :
             mergeList.append(eachPotentialMerge)
     return mergeList
 
-def rankAndMerge(folderName, contigsNamesList, contigsFilename, readsFilename, scoreList, contigGapReadLookUpDic):
+def rankAndMerge(folderName, contigsNamesList, contigsFilename, readsFilename, scoreList, contigGapReadLookUpDic, mScoreThres, conScoreThres ):
     scoreList.sort(key = itemgetter(-1, -2), reverse = True)
     dumpDataToJson(folderName , "scoreList.json", scoreList)
-    mergeList = cutOffToFormMergeList(scoreList)
+    mergeList = cutOffToFormMergeList(scoreList, mScoreThres, conScoreThres )
 
     GCondensed = condenseEdgesOnlyGraph(contigsNamesList)
     readingList = GCondensed.mergeListToReadingList(mergeList)
