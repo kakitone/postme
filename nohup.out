@@ -1,0 +1,301 @@
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+1: PREPARING DATA
+2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader16.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader02.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader11.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader01.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader00.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader17.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader18.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader05.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader06.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader03.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader13.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader07.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader08.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader12.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader15.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader04.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader14.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader19.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader10.ntref" 2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "datafolder/readToContigHeader09.ntref" of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+#.of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+#.of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+#.of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+#.#.of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+#.#.#..#.#.#.of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+#.of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+#.of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+#...of length 95979563
+# construct suffix tree for sequence of length 95979563
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 959795 characters per dot
+...#...#..#.#......#..#................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader13.ntref 64.24
+# reading input file "/home/kakitone/postme/datafolder/split_13_EC.fasta" ...of length 21332864
+# matching query-file "/home/kakitone/postme/datafolder/split_13_EC.fasta"
+# against subject-file "datafolder/readToContigHeader13.ntref"
+.......................................................................
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader00.ntref 67.90
+# reading input file "/home/kakitone/postme/datafolder/split_00_EC.fasta" ..of length 21252216
+# matching query-file "/home/kakitone/postme/datafolder/split_00_EC.fasta"
+# against subject-file "datafolder/readToContigHeader00.ntref"
+.............
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader06.ntref 68.38
+# reading input file "/home/kakitone/postme/datafolder/split_06_EC.fasta" ...of length 21254621
+# matching query-file "/home/kakitone/postme/datafolder/split_06_EC.fasta"
+# against subject-file "datafolder/readToContigHeader06.ntref"
+.
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader02.ntref 68.95
+# reading input file "/home/kakitone/postme/datafolder/split_02_EC.fasta" ..of length 20938892
+# matching query-file "/home/kakitone/postme/datafolder/split_02_EC.fasta"
+# against subject-file "datafolder/readToContigHeader02.ntref"
+....
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader07.ntref 68.98
+# reading input file "/home/kakitone/postme/datafolder/split_07_EC.fasta" ....of length 21091271
+# matching query-file "/home/kakitone/postme/datafolder/split_07_EC.fasta"
+# against subject-file "datafolder/readToContigHeader07.ntref"
+......................
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader08.ntref 70.32
+# reading input file "/home/kakitone/postme/datafolder/split_08_EC.fasta" ..of length 21254117
+# matching query-file "/home/kakitone/postme/datafolder/split_08_EC.fasta"
+# against subject-file "datafolder/readToContigHeader08.ntref"
+.............
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader09.ntref 71.13
+# reading input file "/home/kakitone/postme/datafolder/split_09_EC.fasta" ...of length 21192707
+# matching query-file "/home/kakitone/postme/datafolder/split_09_EC.fasta"
+# against subject-file "datafolder/readToContigHeader09.ntref"
+....................
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader11.ntref 73.38
+# reading input file "/home/kakitone/postme/datafolder/split_11_EC.fasta" ....of length 21114860
+# matching query-file "/home/kakitone/postme/datafolder/split_11_EC.fasta"
+# against subject-file "datafolder/readToContigHeader11.ntref"
+..........
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader16.ntref 74.26
+# reading input file "/home/kakitone/postme/datafolder/split_16_EC.fasta" ..of length 21087783
+# matching query-file "/home/kakitone/postme/datafolder/split_16_EC.fasta"
+# against subject-file "datafolder/readToContigHeader16.ntref"
+..............
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader05.ntref 75.09
+# reading input file "/home/kakitone/postme/datafolder/split_05_EC.fasta" ..of length 21024795
+# matching query-file "/home/kakitone/postme/datafolder/split_05_EC.fasta"
+# against subject-file "datafolder/readToContigHeader05.ntref"
+.......................
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader17.ntref 77.71
+# reading input file "/home/kakitone/postme/datafolder/split_17_EC.fasta" .
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader03.ntref 77.66
+# reading input file "/home/kakitone/postme/datafolder/split_03_EC.fasta" .
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader12.ntref 77.56
+# reading input file "/home/kakitone/postme/datafolder/split_12_EC.fasta" of length 21386329
+# matching query-file "/home/kakitone/postme/datafolder/split_17_EC.fasta"
+# against subject-file "datafolder/readToContigHeader17.ntref"
+..of length 21210307
+# matching query-file "/home/kakitone/postme/datafolder/split_03_EC.fasta"
+# against subject-file "datafolder/readToContigHeader03.ntref"
+of length 21212160
+# matching query-file "/home/kakitone/postme/datafolder/split_12_EC.fasta"
+# against subject-file "datafolder/readToContigHeader12.ntref"
+.
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader19.ntref 77.72
+# reading input file "/home/kakitone/postme/datafolder/split_19_EC.fasta" ..
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader14.ntref 77.82
+# reading input file "/home/kakitone/postme/datafolder/split_14_EC.fasta" of length 21524491
+# matching query-file "/home/kakitone/postme/datafolder/split_19_EC.fasta"
+# against subject-file "datafolder/readToContigHeader19.ntref"
+of length 21332184
+# matching query-file "/home/kakitone/postme/datafolder/split_14_EC.fasta"
+# against subject-file "datafolder/readToContigHeader14.ntref"
+............
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader18.ntref 81.25
+# reading input file "/home/kakitone/postme/datafolder/split_18_EC.fasta" of length 21319204
+# matching query-file "/home/kakitone/postme/datafolder/split_18_EC.fasta"
+# against subject-file "datafolder/readToContigHeader18.ntref"
+......
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader04.ntref 82.18
+# reading input file "/home/kakitone/postme/datafolder/split_04_EC.fasta" of length 21038016
+# matching query-file "/home/kakitone/postme/datafolder/split_04_EC.fasta"
+# against subject-file "datafolder/readToContigHeader04.ntref"
+.# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader06.ntref 82.84
+# SPACE /usr/bin/mummer datafolder/readToContigHeader06.ntref 114.06
+4: FINISHING DATA
+.# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader02.ntref 83.58
+# SPACE /usr/bin/mummer datafolder/readToContigHeader02.ntref 113.76
+4: FINISHING DATA
+# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader13.ntref 83.12
+# SPACE /usr/bin/mummer datafolder/readToContigHeader13.ntref 114.14
+4: FINISHING DATA
+.# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader07.ntref 83.65
+# SPACE /usr/bin/mummer datafolder/readToContigHeader07.ntref 113.90
+4: FINISHING DATA
+...# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader08.ntref 85.07
+# SPACE /usr/bin/mummer datafolder/readToContigHeader08.ntref 114.06
+4: FINISHING DATA
+.......# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader00.ntref 88.17
+# SPACE /usr/bin/mummer datafolder/readToContigHeader00.ntref 114.06
+4: FINISHING DATA
+..# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader16.ntref 88.52
+# SPACE /usr/bin/mummer datafolder/readToContigHeader16.ntref 113.90
+4: FINISHING DATA
+# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader11.ntref 89.04
+# SPACE /usr/bin/mummer datafolder/readToContigHeader11.ntref 113.93
+4: FINISHING DATA
+...# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader09.ntref 89.46
+# SPACE /usr/bin/mummer datafolder/readToContigHeader09.ntref 114.00
+4: FINISHING DATA
+# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader05.ntref 89.78
+# SPACE /usr/bin/mummer datafolder/readToContigHeader05.ntref 113.84
+4: FINISHING DATA
+......# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader12.ntref 92.04
+# SPACE /usr/bin/mummer datafolder/readToContigHeader12.ntref 114.02
+4: FINISHING DATA
+.# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader03.ntref 92.75
+# SPACE /usr/bin/mummer datafolder/readToContigHeader03.ntref 114.02
+4: FINISHING DATA
+.# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader17.ntref 93.32
+# SPACE /usr/bin/mummer datafolder/readToContigHeader17.ntref 114.19
+4: FINISHING DATA
+...# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader14.ntref 93.82
+# SPACE /usr/bin/mummer datafolder/readToContigHeader14.ntref 114.14
+4: FINISHING DATA
+...# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader19.ntref 95.06
+# SPACE /usr/bin/mummer datafolder/readToContigHeader19.ntref 114.32
+4: FINISHING DATA
+......# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader18.ntref 98.10
+# SPACE /usr/bin/mummer datafolder/readToContigHeader18.ntref 114.12
+4: FINISHING DATA
+....# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader04.ntref 99.72
+# SPACE /usr/bin/mummer datafolder/readToContigHeader04.ntref 113.85
+4: FINISHING DATA
+............
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader15.ntref 104.17
+# reading input file "/home/kakitone/postme/datafolder/split_15_EC.fasta" of length 21102229
+# matching query-file "/home/kakitone/postme/datafolder/split_15_EC.fasta"
+# against subject-file "datafolder/readToContigHeader15.ntref"
+.
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader10.ntref 104.45
+# reading input file "/home/kakitone/postme/datafolder/split_10_EC.fasta" .of length 21179697
+# matching query-file "/home/kakitone/postme/datafolder/split_10_EC.fasta"
+# against subject-file "datafolder/readToContigHeader10.ntref"
+...
+# CONSTRUCTIONTIME /usr/bin/mummer datafolder/readToContigHeader01.ntref 108.47
+# reading input file "/home/kakitone/postme/datafolder/split_01_EC.fasta" of length 21393043
+# matching query-file "/home/kakitone/postme/datafolder/split_01_EC.fasta"
+# against subject-file "datafolder/readToContigHeader01.ntref"
+# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader15.ntref 121.50
+# SPACE /usr/bin/mummer datafolder/readToContigHeader15.ntref 113.91
+4: FINISHING DATA
+# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader10.ntref 123.73
+# SPACE /usr/bin/mummer datafolder/readToContigHeader10.ntref 113.99
+4: FINISHING DATA
+# COMPLETETIME /usr/bin/mummer datafolder/readToContigHeader01.ntref 125.80
+# SPACE /usr/bin/mummer datafolder/readToContigHeader01.ntref 114.20
+4: FINISHING DATA
+Time 283.962054014

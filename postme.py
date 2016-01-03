@@ -21,7 +21,7 @@ import rankingLib
 import readConnectivityLib
 
 def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, useSpades):
-    outputHeader, splitNum, parallelNum, debug = "readToContigHeader",  20, 4, False    
+    outputHeader, splitNum, parallelNum, debug = "readToContigHeader",  20, 20, True 
     contigsFilename, readsFilename= "tmp" + inputContigsFilename , "tmp" + inputReadsFilename
 
     targetToSourceContigsNamesDic = houseKeeperLib.transformFileHeaders(folderName, inputContigsFilename, contigsFilename)

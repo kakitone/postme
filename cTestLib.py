@@ -28,7 +28,7 @@ def assignCoverageFromDataList(G, dataList,  folderName, contigFileName):
 def assignCoverageFromHeader(G, folderName, contigFileName, targetToSourceContigsNamesDic):
     assignLengthToContigNodes(G, folderName, contigFileName)
     for targetName in targetToSourceContigsNamesDic: 
-        G.dicOfContigNodes[targetName].readToContigCount = targetToSourceContigsNamesDic[targetName].split("_")[5] * G.dicOfContigNodes[targetName].contigLength/200
+        G.dicOfContigNodes[targetName].readToContigCount = float(targetToSourceContigsNamesDic[targetName].split("_")[5]) * G.dicOfContigNodes[targetName].contigLength/200
 
 def calculateConfidenceScore(G, condenseCandidatesList):
     scoreList = []

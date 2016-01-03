@@ -20,7 +20,7 @@ class baselineAlgoTest(unittest.TestCase):
         print "Set up : Started"
         
         self.folderName = "/tmp/testdir/"
-        self.mummerLink = "/Users/kakitlam/Desktop/allinone/experimentBench/MUMmer3.23/"
+        self.mummerLink = "/tmp/MUMmer3.23/"
         self.readsFilename = "LR.fasta"
         self.contigsFilename = "mFixed2.fasta"
         self.outputHeader = "outputHeader"

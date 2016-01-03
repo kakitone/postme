@@ -116,14 +116,16 @@ def readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contig
             elif keyTrialRev in contigGapReadLookUpDic:
                 readOrientation = "d"
                 gapRecord = contigGapReadLookUpDic[keyTrialRev][0]
-                sInfo = [gapRecord[0][8] - gapRecord[0][2], gapRecord[0][8] - gapRecord[0][3]]
-                eInfo = [gapRecord[1][8] - gapRecord[1][2], gapRecord[1][8] - gapRecord[1][3]]
+                eInfo = [gapRecord[0][8] - gapRecord[0][2], gapRecord[0][8] - gapRecord[0][3]]
+                sInfo  = [gapRecord[1][8] - gapRecord[1][2], gapRecord[1][8] - gapRecord[1][3]]
                 s, e = max(sInfo), min(eInfo)
             else:
                 print "Error: Gap not found "
                 assert(False)
 
             readName = gapRecord[0][-1]
+            print "s, e : " , s, e, sInfo, eInfo, len(eachPath)
+            #print gapRecord
 
             if s < e:
                 gapContent = readsDic[readName].seq[s:e-1] if readOrientation == "p" else readsDic[readName].reverse_complement().seq[s:e-1]
@@ -139,7 +141,7 @@ def readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contig
     SeqIO.write(improvedList, folderName + "improved.fasta" , "fasta")
 
 def cutOffToFormMergeList(scoreList):
-    mScoreThres, conScoreThres  = 1, 0.95 
+    mScoreThres, conScoreThres  = 2, 0.95 
     mergeList = []
     for eachPotentialMerge in scoreList: 
         if eachPotentialMerge[-1] > mScoreThres or (eachPotentialMerge[-1] == mScoreThres and eachPotentialMerge[-2] >= conScoreThres ) :
