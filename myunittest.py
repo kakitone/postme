@@ -134,7 +134,6 @@ class baselineAlgoTest(unittest.TestCase):
          
         expectedContig= "AAACCC" + "GGG" + "CCCTTTT"
         records = list(SeqIO.parse(self.folderName + "improved.fasta", "fasta"))
-        print records[0].seq
         assert(expectedContig == str(records[0].seq))
 
     def tearDown(self):
