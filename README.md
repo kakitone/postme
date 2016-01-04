@@ -6,8 +6,8 @@ To use the tool, use the following command,
     python postme.py \
         -o workingDirectory/ \
         -a mummerPath/ \
-        -c contigs.fasta \
-        -r longreads.fasta
+        -c illuminaContigs.fasta \
+        -r pacbioReads.fasta
         
         
 Unit tests are continuously tested on Travis CI and the current build status is  
