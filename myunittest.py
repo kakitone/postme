@@ -130,7 +130,7 @@ class baselineAlgoTest(unittest.TestCase):
         contigGapReadLookUpDic['ContigDummyL_p-ContigDummyR_p'] = [[contigDummyLRecord, contigDummyRRecord]]
 
         contigsNamesList = alignmentLib.findContigsNames(self.folderName, self.contigsFilename)
-        rankingLib.rankAndMerge(self.folderName,contigsNamesList, self.contigsFilename, self.readsFilename, scoreList, contigGapReadLookUpDic, 1, 0.95)
+        rankingLib.rankAndMerge(self.folderName,contigsNamesList, self.contigsFilename, self.readsFilename, scoreList, contigGapReadLookUpDic, 1, 0.95, "scoreList.json", "improved.fasta")
          
         expectedContig= "AAACCC" + "GGG" + "CCCTTTT"
         records = list(SeqIO.parse(self.folderName + "improved.fasta", "fasta"))

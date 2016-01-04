@@ -47,7 +47,3 @@ def calculateConfidenceScore(G, condenseCandidatesList):
         scoreList.append([ eachcandidate , 1 - pvalue, mScore])
 
     return scoreList
-
-
-
-

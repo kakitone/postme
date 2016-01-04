@@ -17,6 +17,7 @@ from itertools import groupby
 import json
 from operator import itemgetter
 
+import houseKeeperLib
 import graphLib
 
 class condenseEdgesOnlyGraph(graphLib.contigGraph):
@@ -79,14 +80,10 @@ class condenseEdgesOnlyGraph(graphLib.contigGraph):
         self.findStarterList()
         return self.formContigReadingList()
 
-def dumpDataToJson(folderName , filename, dataList) :
-    with open(folderName + filename, 'w') as outfile:
-        json.dump(dataList, outfile)
-
 def negateSide(side):
     return "d" if side == "p" else "p"
 
-def readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contigGapReadLookUpDic, readingList):
+def readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contigGapReadLookUpDic, readingList, outputContigsFilename):
     contigsDic, readsDic = {}, {}
     for record in SeqIO.parse(folderName + contigsFilename, "fasta"):
         contigsDic[record.id] = record
@@ -136,7 +133,7 @@ def readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contig
             
         improvedList.append(SeqRecord(Seq(str(newContig), generic_dna), description="", id="Segkk" + str(len(improvedList))))
 
-    SeqIO.write(improvedList, folderName + "improved.fasta" , "fasta")
+    SeqIO.write(improvedList, folderName + outputContigsFilename , "fasta")
 
 def cutOffToFormMergeList(scoreList, mScoreThres, conScoreThres ):
     mergeList = []
@@ -145,13 +142,13 @@ def cutOffToFormMergeList(scoreList, mScoreThres, conScoreThres ):
             mergeList.append(eachPotentialMerge)
     return mergeList
 
-def rankAndMerge(folderName, contigsNamesList, contigsFilename, readsFilename, scoreList, contigGapReadLookUpDic, mScoreThres, conScoreThres ):
+def rankAndMerge(folderName, contigsNamesList, contigsFilename, readsFilename, scoreList, contigGapReadLookUpDic, mScoreThres, conScoreThres, scoreListOutputName, outputContigsFilename):
     scoreList.sort(key = itemgetter(-1, -2), reverse = True)
-    dumpDataToJson(folderName , "scoreList.json", scoreList)
+    houseKeeperLib.dumpDataToJson(folderName , scoreListOutputName, scoreList)
     mergeList = cutOffToFormMergeList(scoreList, mScoreThres, conScoreThres )
 
     GCondensed = condenseEdgesOnlyGraph(contigsNamesList)
     readingList = GCondensed.mergeListToReadingList(mergeList)
 
-    readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contigGapReadLookUpDic, readingList)
+    readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contigGapReadLookUpDic, readingList, outputContigsFilename)
     
