@@ -15,15 +15,16 @@ Unit tests are continuously tested on Travis CI and the current build status is
 ## Example
 1. Clone POSTME
 
-    git clone https://github.com/kakitone/postme.git
+        git clone https://github.com/kakitone/postme.git
 
 2. Install dependency, you can do it through virtualenv
     
-    pip install virtualenv
-    source venv/bin/activate
-    pip install numpy scipy biopython matplotlib
+        pip install virtualenv
+        source venv/bin/activate
+        pip install numpy scipy biopython matplotlib
     
 3. To make sure you have installed all the dependency,
-    python myunittest.py
+
+        python postme/myunittest.py
 
 4. You can then run POSTME then.
