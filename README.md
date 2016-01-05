@@ -27,4 +27,4 @@ Unit tests are continuously tested on Travis CI and the current build status is
 
         python postme/myunittest.py
 
-4. You can then run POSTME then.
+4. You can now run POSTME.
