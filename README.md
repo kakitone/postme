@@ -1,7 +1,7 @@
 # POSTME
-POSTME : POSTprocessing MEtagenomics assembly with hybrid data.
+POSTME : POSTprocessing MEtagenomics assembly with hybrid data by highly precise scaffolding
 
-To use the tool, use the following command(asuming illuminaContigs.fasta and pacbioReads.fasta are in workingDirectory). The output file is improved.fasta
+To use the tool, use the following command(assuming illuminaContigs.fasta and pacbioReads.fasta are in workingDirectory). The output file is improved.fasta
 
     python postme.py \
         -o workingDirectory/ \
