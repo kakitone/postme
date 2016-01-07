@@ -66,10 +66,10 @@ contigsFilename, readsFilename =  args['contigsFilename'], args['readsFilename']
 
 useSpades = True if args['inputCoverageViaSpadesHeader'] == 'T' else False
 noAlignment = True if args['noAlignment'] == 'T' else False
-scoreListOutputName = args['scoreListOutputName'] if len(args['scoreListOutputName']) > 0 else "scoreList.json"
-outputContigsFilename = args['outputContigsFilename'] if len(args['outputContigsFilename']) > 0 else "improved.fasta"
-mScoreThres = int(args['mScoreCutOff']) if len(args['mScoreCutOff']) > 0  else  2 
-conScoreThres = float(args['cScoreCutOff']) if len(args['cScoreCutOff']) > 0  else  0.95
+scoreListOutputName = args['scoreListOutputName'] if args['scoreListOutputName'] != None else "scoreList.json"
+outputContigsFilename = args['outputContigsFilename'] if args['outputContigsFilename'] != None else "improved.fasta"
+mScoreThres = int(args['mScoreCutOff']) if args['mScoreCutOff'] != None > 0  else  2 
+conScoreThres = float(args['cScoreCutOff']) if args['cScoreCutOff'] != None  else  0.95
 
 t0 = time.time()
 mainFlow(folderName, mummerLink, contigsFilename, readsFilename, useSpades, noAlignment, scoreListOutputName, outputContigsFilename, mScoreThres, conScoreThres)
