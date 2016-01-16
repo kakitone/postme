@@ -19,6 +19,7 @@ import graphLib
 import houseKeeperLib
 import rankingLib
 import readConnectivityLib
+import setCoverLib
 
 def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, useSpades, noAlignment, scoreListOutputName, outputContigsFilename, mScoreThres, conScoreThres):
     outputHeader, splitNum, parallelNum = "readToContigHeader",  20, 20  
@@ -39,14 +40,18 @@ def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, u
     
     condenseCandidatesList = G.findCondenseCandidatesList()
 
+    potentialMergesList = setCoverLib.extendConnectivityFromReads(condenseCandidatesList, connectingReadsList, contigsNamesList)
+
     if useSpades == True:
         cTestLib.assignCoverageFromHeader(G, folderName, contigsFilename, targetToSourceContigsNamesDic)
     else:
         cTestLib.assignCoverageFromDataList(G, dataList,folderName, contigsFilename)
     
-    scoreList = cTestLib.calculateConfidenceScore(G, condenseCandidatesList)
+    scoreList = cTestLib.calculateConfidenceScore(G, potentialMergesList)
     
-    rankingLib.rankAndMerge(folderName,contigsNamesList, contigsFilename, readsFilename, scoreList, contigGapReadLookUpDic, mScoreThres, conScoreThres, scoreListOutputName, outputContigsFilename)
+    scoreListWithDummy, dummyNodeDataRobot = setCoverLib.assignRepeatedNodesToDummy(scoreList)
+
+    rankingLib.rankAndMerge(folderName,contigsNamesList, contigsFilename, readsFilename, scoreListWithDummy, contigGapReadLookUpDic, mScoreThres, conScoreThres, scoreListOutputName, outputContigsFilename, dummyNodeDataRobot)
 
 parser = argparse.ArgumentParser(description='PostMe')
 parser.add_argument('-o', '--outputFolder', help= 'Output folder path', required=False)

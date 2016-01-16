@@ -13,6 +13,7 @@ import cTestLib
 import graphLib
 import rankingLib
 import readConnectivityLib
+import setCoverLib
 
 class baselineAlgoTest(unittest.TestCase):
     
@@ -49,6 +50,11 @@ class baselineAlgoTest(unittest.TestCase):
         connectingReadsList = readConnectivityLib.findConnectingReadsList(dataList)
         assert(connectingReadsList == [['ReadDummy', 'L', 'ContigDummy', [601, 800, 1, 200, 200, 200, 100.0, 800, 400, 'ContigDummy', 'ReadDummy']]])
 
+    def test_findConnectingReadsListEmbed(self):
+        dataList = [[1, 200, 201, 400, 200, 200, 100.0, 200, 800, 'ContigDummy', 'ReadDummy']]
+        connectingReadsList = readConnectivityLib.findConnectingReadsList(dataList)
+        assert(connectingReadsList == [['ReadDummy', 'B', 'ContigDummy',[1, 200, 201, 400, 200, 200, 100.0, 200, 800, 'ContigDummy', 'ReadDummy']]])
+
     def test_findSpanReadsList(self):
         connectingReadsList = []
         contigDummyLRecord, contigDummyRRecord = [601, 800, 1, 200, 200, 200, 100.0, 800, 400, 'ContigDummyL', 'ReadDummy'],  [1, 200, 201, 400, 200, 200, 100.0, 800, 400, 'ContigDummyR', 'ReadDummy']
@@ -60,6 +66,30 @@ class baselineAlgoTest(unittest.TestCase):
         assert(len(contigGapReadLookUpDic) == 1)
         assert(contigGapReadLookUpDic['ContigDummyL_p-ContigDummyR_p'].sort() == [[contigDummyLRecord,contigDummyRRecord]].sort())
 
+    def test_findSpanReadsListEmbed(self):
+        connectingReadsList = []
+        contigDummyLRecord = [601, 800, 1, 200, 200, 200, 100.0, 800, 400, 'ContigDummyL', 'ReadDummy']  
+        contigDummyBRecord1 = [1, 200, 101, 300, 200, 200, 100.0, 200, 400, 'ContigDummyB1', 'ReadDummy']
+        contigDummyBRecord2 = [1, 200, 350, 151, 200, 200, 100.0, 200, 400, 'ContigDummyB2', 'ReadDummy']
+        contigDummyRRecord = [1, 200, 201, 400, 200, 200, 100.0, 800, 400, 'ContigDummyR', 'ReadDummy']
+        
+        connectingReadsList.append(['ReadDummy', 'L', 'ContigDummyL', contigDummyLRecord])
+        connectingReadsList.append(['ReadDummy', 'B', 'ContigDummyB1', contigDummyBRecord1])
+        connectingReadsList.append(['ReadDummy', 'B', 'ContigDummyB2', contigDummyBRecord2])
+        connectingReadsList.append(['ReadDummy', 'R', 'ContigDummyR', contigDummyRRecord])
+        spanReadsList, contigGapReadLookUpDic = readConnectivityLib.findSpanReadsList(connectingReadsList)
+        
+        expectedSpanReadsList =  [['ContigDummyL_p', 'ContigDummyB1_p', 'ReadDummy'], \
+                                  ['ContigDummyB1_p', 'ContigDummyB2_d', 'ReadDummy'], \
+                                  ['ContigDummyB2_d', 'ContigDummyR_p', 'ReadDummy']]
+        
+        assert(spanReadsList.sort() == expectedSpanReadsList.sort())
+        assert(len(contigGapReadLookUpDic) == 3)
+
+        assert(contigGapReadLookUpDic['ContigDummyL_p-ContigDummyB1_p'].sort() == [[contigDummyLRecord,contigDummyBRecord1]].sort())
+        assert(contigGapReadLookUpDic['ContigDummyB1_p-ContigDummyB2_d'].sort() == [[contigDummyBRecord1,contigDummyBRecord2]].sort())
+        assert(contigGapReadLookUpDic['ContigDummyB2_d-ContigDummyR_p'].sort() == [[contigDummyBRecord2,contigDummyRRecord]].sort())
+    
     def test_findContigsNames(self):
         self.createSimpleFasta()   
         contigsNamesList = alignmentLib.findContigsNames(self.folderName, self.contigsFilename)
@@ -81,7 +111,74 @@ class baselineAlgoTest(unittest.TestCase):
         G = graphLib.formContigGraph(spanReadsList, contigsNamesList)
         condenseCandidatesList = G.findCondenseCandidatesList()        
         assert(condenseCandidatesList == ['ContigDummyL_R~ContigDummyR_L~1'])
-            
+    
+    def test_transformConnectingReadsToSetStructure(self):
+        connectingReadsList = []
+        contigDummyLRecord = [601, 800, 1, 200, 200, 200, 100.0, 800, 400, 'ContigDummyL', 'ReadDummy']  
+        contigDummyBRecord1 = [1, 200, 101, 300, 200, 200, 100.0, 200, 400, 'ContigDummyB1', 'ReadDummy']
+        contigDummyBRecord2 = [1, 200, 350, 151, 200, 200, 100.0, 200, 400, 'ContigDummyB2', 'ReadDummy']
+        contigDummyRRecord = [1, 200, 201, 400, 200, 200, 100.0, 800, 400, 'ContigDummyR', 'ReadDummy']
+        
+        connectingReadsList.append(['ReadDummy', 'L', 'ContigDummyL', contigDummyLRecord])
+        connectingReadsList.append(['ReadDummy', 'B', 'ContigDummyB1', contigDummyBRecord1])
+        connectingReadsList.append(['ReadDummy', 'B', 'ContigDummyB2', contigDummyBRecord2])
+        connectingReadsList.append(['ReadDummy', 'R', 'ContigDummyR', contigDummyRRecord])
+
+        setInfo =  setCoverLib.transformConnectingReadsToSetStructure(connectingReadsList)
+
+        setOfElements = ['ContigDummyL', 'ContigDummyB1', 'ContigDummyB2', 'ContigDummyR']
+        linkageAlongList = [['ContigDummyL_R', 'ContigDummyB1_L'], ['ContigDummyB1_R', 'ContigDummyB2_R'], ['ContigDummyB2_L', 'ContigDummyR_L']]
+        recordItem = [setOfElements, linkageAlongList, len(setOfElements)]
+        expectedSetInfo = [recordItem]
+
+        assert(expectedSetInfo == setInfo)
+
+    def test_findUnUsedContigs(self):
+        condenseCandidatesList, contigsNamesList = ['ContigDummyL_R~ContigDummyR_L~1'], ['ContigDummyL', 'ContigDummyR', 'ContigDummyB']
+        unUsedContigsDic = setCoverLib.findUnUsedContigs(condenseCandidatesList, contigsNamesList)
+        expectedUnUsedContigsDic = {'ContigDummyL': False, 'ContigDummyB': True, 'ContigDummyR': False}
+        assert(unUsedContigsDic == expectedUnUsedContigsDic)
+
+    def test_findSetCoverBaseLine(self):
+        unUsedContigsDic, connectingReadsList = {'ContigDummyL': True, 'ContigDummyB1': True, 'ContigDummyB2': True, 'ContigDummyR': True} , []
+        contigDummyLRecord = [601, 800, 1, 200, 200, 200, 100.0, 800, 400, 'ContigDummyL', 'ReadDummy']  
+        contigDummyBRecord1 = [1, 200, 101, 300, 200, 200, 100.0, 200, 400, 'ContigDummyB1', 'ReadDummy']
+        contigDummyBRecord2 = [1, 200, 350, 151, 200, 200, 100.0, 200, 400, 'ContigDummyB2', 'ReadDummy']
+        contigDummyRRecord = [1, 200, 201, 400, 200, 200, 100.0, 800, 400, 'ContigDummyR', 'ReadDummy']
+
+        connectingReadsList.append(['ReadDummy', 'L', 'ContigDummyL', contigDummyLRecord])
+        connectingReadsList.append(['ReadDummy', 'B', 'ContigDummyB1', contigDummyBRecord1])
+        connectingReadsList.append(['ReadDummy', 'B', 'ContigDummyB2', contigDummyBRecord2])
+        connectingReadsList.append(['ReadDummy', 'R', 'ContigDummyR', contigDummyRRecord])
+        
+        setCoverList = setCoverLib.findSetCoverBaseLine(unUsedContigsDic, connectingReadsList)
+
+        expectedSetCoverList = [['ContigDummyL_R', 'ContigDummyB1_L'], ['ContigDummyB1_R', 'ContigDummyB2_R'], ['ContigDummyB2_L', 'ContigDummyR_L']]
+        assert(expectedSetCoverList == setCoverList)
+
+    def test_findSetCoverGreedy(self):
+
+        unUsedContigsDic, connectingReadsList = {'ContigDummyL': True, 'ContigDummyB1': True, 'ContigDummyB2': True, 'ContigDummyR': True} , []
+        contigDummyLRecord = [601, 800, 1, 200, 200, 200, 100.0, 800, 400, 'ContigDummyL', 'ReadDummy']  
+        contigDummyBRecord1 = [1, 200, 101, 300, 200, 200, 100.0, 200, 400, 'ContigDummyB1', 'ReadDummy']
+        contigDummyRRecord = [1, 200, 201, 400, 200, 200, 100.0, 800, 400, 'ContigDummyR', 'ReadDummy']
+
+        contigDummyBRecord2 = [1, 200, 350, 151, 200, 200, 100.0, 200, 400, 'ContigDummyB2', 'ReadDummy2']
+        contigDummyBRecord3 = [1, 200, 101, 300, 200, 200, 100.0, 200, 400, 'ContigDummyB1', 'ReadDummy2']
+
+        connectingReadsList.append(['ReadDummy', 'L', 'ContigDummyL', contigDummyLRecord])
+        connectingReadsList.append(['ReadDummy', 'B', 'ContigDummyB1', contigDummyBRecord1])
+        connectingReadsList.append(['ReadDummy', 'R', 'ContigDummyR', contigDummyRRecord])
+        
+        connectingReadsList.append(['ReadDummy2', 'B', 'ContigDummyB2', contigDummyBRecord2])
+        connectingReadsList.append(['ReadDummy2', 'B', 'ContigDummyB1', contigDummyBRecord3])
+
+        setCoverList = setCoverLib.findSetCoverGreedy(unUsedContigsDic, connectingReadsList)
+        
+        expectedSetCoverList =  [['ContigDummyL_R', 'ContigDummyB1_L'], ['ContigDummyB1_R', 'ContigDummyR_L'], ['ContigDummyB1_R', 'ContigDummyB2_R']]       
+        
+        assert(expectedSetCoverList.sort() == setCoverList.sort())
+
     def test_assignCoverageFromDataList(self):
         dataList, contigList = [ [1, 6, 1, 6, 6, 6, 100.0, 6, 6, 'ContigDummyL', 'ReadDummy'] ], []
 
@@ -115,6 +212,19 @@ class baselineAlgoTest(unittest.TestCase):
         assert(abs(scoreList[0][1] -  0.53846153846153844) < 0.01)
         assert(scoreList[0][2] == 1)
 
+    def test_assignRepeatedNodesToDummy(self):
+        scoreList = [ ['ContigDummyL_R~ContigDummyR_L~1' , 1 , 1] ] 
+        scoreListWithDummy, dummyNodeDataRobot = setCoverLib.assignRepeatedNodesToDummy(scoreList)
+        expectedScoreListWithDummy = [['Dummy0_R~Dummy1_L~1', 1, 1]]
+
+        assert( "ContigDummyL" == dummyNodeDataRobot.D2RLookUp("Dummy0"))
+        assert( "ContigDummyR" == dummyNodeDataRobot.D2RLookUp("Dummy1"))
+        
+        assert( ["Dummy0"] == dummyNodeDataRobot.R2DLookUp("ContigDummyL"))
+        assert( ["Dummy1"] == dummyNodeDataRobot.R2DLookUp("ContigDummyR"))
+        
+        assert(expectedScoreListWithDummy == scoreListWithDummy)
+
     def test_rankAndMerge(self):
         contigList = []
         contigList.append(SeqRecord(Seq("AAACCC", generic_dna), id="ContigDummyL", description=""))
@@ -130,7 +240,13 @@ class baselineAlgoTest(unittest.TestCase):
         contigGapReadLookUpDic['ContigDummyL_p-ContigDummyR_p'] = [[contigDummyLRecord, contigDummyRRecord]]
 
         contigsNamesList = alignmentLib.findContigsNames(self.folderName, self.contigsFilename)
-        rankingLib.rankAndMerge(self.folderName,contigsNamesList, self.contigsFilename, self.readsFilename, scoreList, contigGapReadLookUpDic, 1, 0.95, "scoreList.json", "improved.fasta")
+        
+        dummyNodeDataRobot = setCoverLib.dummyNodeController()
+
+        dummyNodeDataRobot.realToDummyDic = {'ContigDummyL': 'ContigDummyL','ContigDummyR': 'ContigDummyR'}
+        dummyNodeDataRobot.dummyToRealDic = {'ContigDummyL': 'ContigDummyL','ContigDummyR': 'ContigDummyR'}
+
+        rankingLib.rankAndMerge(self.folderName,contigsNamesList, self.contigsFilename, self.readsFilename, scoreList, contigGapReadLookUpDic, 1, 0.95, "scoreList.json", "improved.fasta", dummyNodeDataRobot)
          
         expectedContig= "AAACCC" + "GGG" + "CCCTTTT"
         records = list(SeqIO.parse(self.folderName + "improved.fasta", "fasta"))
@@ -146,4 +262,8 @@ def main():
     
 if __name__ == '__main__':
     main()
+
+
+
+
 

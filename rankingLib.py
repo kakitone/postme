@@ -19,6 +19,7 @@ from operator import itemgetter
 
 import houseKeeperLib
 import graphLib
+import setCoverLib
 
 class condenseEdgesOnlyGraph(graphLib.contigGraph):
     def formGraph(self, mergeList):
@@ -142,13 +143,29 @@ def cutOffToFormMergeList(scoreList, mScoreThres, conScoreThres ):
             mergeList.append(eachPotentialMerge)
     return mergeList
 
-def rankAndMerge(folderName, contigsNamesList, contigsFilename, readsFilename, scoreList, contigGapReadLookUpDic, mScoreThres, conScoreThres, scoreListOutputName, outputContigsFilename):
+def rankAndMerge(folderName, contigsNamesList, contigsFilename, readsFilename, scoreList, contigGapReadLookUpDic, mScoreThres, conScoreThres, scoreListOutputName, outputContigsFilename, dummyNodeDataRobot):
+    
     scoreList.sort(key = itemgetter(-1, -2), reverse = True)
     houseKeeperLib.dumpDataToJson(folderName , scoreListOutputName, scoreList)
     mergeList = cutOffToFormMergeList(scoreList, mScoreThres, conScoreThres )
 
-    GCondensed = condenseEdgesOnlyGraph(contigsNamesList)
-    readingList = GCondensed.mergeListToReadingList(mergeList)
+    nameList = dummyNodeDataRobot.getNameList()
 
+    GCondensed = condenseEdgesOnlyGraph(nameList)
+
+    readingListWithDummy = GCondensed.mergeListToReadingList(mergeList)
+
+    readingList = dummyNodeDataRobot.mapReadingList(readingListWithDummy)
+    
     readContigGraphToContigs(folderName,  contigsFilename, readsFilename, contigGapReadLookUpDic, readingList, outputContigsFilename)
+
+
+
+
+
+
+
+
+
+
     
