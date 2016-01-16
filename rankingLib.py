@@ -149,6 +149,8 @@ def rankAndMerge(folderName, contigsNamesList, contigsFilename, readsFilename, s
     houseKeeperLib.dumpDataToJson(folderName , scoreListOutputName, scoreList)
     mergeList = cutOffToFormMergeList(scoreList, mScoreThres, conScoreThres )
 
+    dummyNodeDataRobot.addAllContigs(contigsNamesList)
+    
     nameList = dummyNodeDataRobot.getNameList()
 
     GCondensed = condenseEdgesOnlyGraph(nameList)

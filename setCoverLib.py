@@ -24,7 +24,12 @@ class dummyNodeController(object):
                                         if realName in self.realToDummyDic else [ dummyName ]
             
         return dummyName 
-        
+    
+    def addAllContigs(self, contigsNamesList):
+        for contigName in contigsNamesList:
+            if not contigName in self.realToDummyDic:
+                self.addDummy(contigName)
+
     def R2DLookUp(self, realName):
         return self.realToDummyDic[realName]
 
@@ -120,7 +125,7 @@ def transformConnectingReadsToSetStructure(connectingReadsList):
             linkList[0].append(eachContig[0:-2])
 
         for i in range(len(eachlinkedInfo[0]) - 1):
-            linkList[1].append([convertPD2LR(eachlinkedInfo[0][i], "R"), convertPD2LR(eachlinkedInfo[0][i+1], "L")])
+            linkList[1].append(convertPD2LR(eachlinkedInfo[0][i], "R") + "~" + convertPD2LR(eachlinkedInfo[0][i+1], "L") + "~" + "1")
 
         linkList[2] = len(eachlinkedInfo[0])
         setStructures.append(linkList)
@@ -147,6 +152,7 @@ def assignRepeatedNodesToDummy(scoreList):
         mScore = infoList[2]
         newName = name1  + "~" + name2 + "~" + mScore 
         scoreListWithDummy.append([newName, eachScoreItem[1], eachScoreItem[2]])
+
 
     return scoreListWithDummy, dummyNodeDataRobot
 

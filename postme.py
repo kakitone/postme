@@ -41,7 +41,7 @@ def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, u
     condenseCandidatesList = G.findCondenseCandidatesList()
 
     potentialMergesList = setCoverLib.extendConnectivityFromReads(condenseCandidatesList, connectingReadsList, contigsNamesList)
-
+    
     if useSpades == True:
         cTestLib.assignCoverageFromHeader(G, folderName, contigsFilename, targetToSourceContigsNamesDic)
     else:
