@@ -153,7 +153,7 @@ class baselineAlgoTest(unittest.TestCase):
         
         setCoverList = setCoverLib.findSetCoverBaseLine(unUsedContigsDic, connectingReadsList)
 
-        expectedSetCoverList = [['ContigDummyL_R', 'ContigDummyB1_L'], ['ContigDummyB1_R', 'ContigDummyB2_R'], ['ContigDummyB2_L', 'ContigDummyR_L']]
+        expectedSetCoverList = ['ContigDummyL_R~ContigDummyB1_L~3', 'ContigDummyB1_R~ContigDummyB2_R~3', 'ContigDummyB2_L~ContigDummyR_L~3']
         assert(expectedSetCoverList == setCoverList)
 
     def test_findSetCoverGreedy(self):
@@ -175,7 +175,7 @@ class baselineAlgoTest(unittest.TestCase):
 
         setCoverList = setCoverLib.findSetCoverGreedy(unUsedContigsDic, connectingReadsList)
         
-        expectedSetCoverList =  [['ContigDummyL_R', 'ContigDummyB1_L'], ['ContigDummyB1_R', 'ContigDummyR_L'], ['ContigDummyB1_R', 'ContigDummyB2_R']]       
+        expectedSetCoverList =  ['ContigDummyL_R~ContigDummyB1_L~3', 'ContigDummyB1_R~ContigDummyR_L~3', 'ContigDummyB1_R~ContigDummyB2_R~3']       
         
         assert(expectedSetCoverList.sort() == setCoverList.sort())
 
