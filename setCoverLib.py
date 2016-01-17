@@ -125,7 +125,7 @@ def transformConnectingReadsToSetStructure(connectingReadsList):
             linkList[0].append(eachContig[0:-2])
 
         for i in range(len(eachlinkedInfo[0]) - 1):
-            linkList[1].append(convertPD2LR(eachlinkedInfo[0][i], "R") + "~" + convertPD2LR(eachlinkedInfo[0][i+1], "L") + "~" + "1")
+            linkList[1].append(convertPD2LR(eachlinkedInfo[0][i], "R") + "~" + convertPD2LR(eachlinkedInfo[0][i+1], "L") + "~" + "3")
 
         linkList[2] = len(eachlinkedInfo[0])
         setStructures.append(linkList)
