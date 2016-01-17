@@ -127,7 +127,7 @@ class baselineAlgoTest(unittest.TestCase):
         setInfo =  setCoverLib.transformConnectingReadsToSetStructure(connectingReadsList)
 
         setOfElements = ['ContigDummyL', 'ContigDummyB1', 'ContigDummyB2', 'ContigDummyR']
-        linkageAlongList = [['ContigDummyL_R', 'ContigDummyB1_L'], ['ContigDummyB1_R', 'ContigDummyB2_R'], ['ContigDummyB2_L', 'ContigDummyR_L']]
+        linkageAlongList = ['ContigDummyL_R~ContigDummyB1_L~3', 'ContigDummyB1_R~ContigDummyB2_R~3', 'ContigDummyB2_L~ContigDummyR_L~3']
         recordItem = [setOfElements, linkageAlongList, len(setOfElements)]
         expectedSetInfo = [recordItem]
 
