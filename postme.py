@@ -47,9 +47,9 @@ def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, u
     else:
         cTestLib.assignCoverageFromDataList(G, dataList,folderName, contigsFilename)
     
-    scoreList = cTestLib.calculateConfidenceScore(G, potentialMergesList)
+    scoreStructList = cTestLib.calculateConfidenceScore(G, potentialMergesList)
     
-    scoreListWithDummy, dummyNodeDataRobot = setCoverLib.assignRepeatedNodesToDummy(scoreList)
+    scoreListWithDummy, dummyNodeDataRobot = setCoverLib.assignRepeatedNodesToDummy(scoreStructList)
 
     rankingLib.rankAndMerge(folderName,contigsNamesList, contigsFilename, readsFilename, scoreListWithDummy, contigGapReadLookUpDic, mScoreThres, conScoreThres, scoreListOutputName, outputContigsFilename, dummyNodeDataRobot)
 

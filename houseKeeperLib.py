@@ -5,7 +5,10 @@ from Bio import SeqIO
 from Bio.Alphabet import generic_dna
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
+from itertools import groupby
 import json
+from operator import itemgetter
+
 
 def dumpDataToJson(folderName , filename, dataList) :
     with open(folderName + filename, 'w') as outfile:
@@ -32,3 +35,15 @@ def transformFileHeaders(folderName, inputFastaName, outputFastaName, noAlignmen
 def trailingFolderCorrection(folderName):
     return folderName if folderName[-1] == "/" else folderName + "/"
   
+def extractMergeCandidStructToList(candidatesStructList):
+    returnList = [] 
+    for eachRecord in candidatesStructList:
+        returnList += eachRecord[0]
+    return returnList
+
+def removeRedundantList(sourceList):
+    targetList = []
+    sourceList.sort()
+    for key, items in groupby(sourceList):
+        targetList.append(key)
+    return targetList 

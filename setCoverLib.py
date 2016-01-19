@@ -1,6 +1,7 @@
 from itertools import groupby
 from operator import itemgetter
 
+import houseKeeperLib
 import readConnectivityLib
 
 
@@ -12,19 +13,18 @@ class dummyNodeController(object):
         self.header = "Dummy"
         self.ctr = -1
 
-    def tryAndAddDummyWithSide(self, realNameWithSide):
-        sideSuffix, realName  = realNameWithSide[-2:], realNameWithSide[0:-2]
-        return self.addDummy(realName) + sideSuffix
-
-    def addDummy(self, realName):
-        self.ctr += 1
-        dummyName = self.header  + str(self.ctr)
-        self.dummyToRealDic[dummyName] = realName
-        self.realToDummyDic[realName] = self.realToDummyDic[realName] + [dummyName] \
-                                        if realName in self.realToDummyDic else [ dummyName ]
+    def addDummy(self, realName, toAddDummy):
+        if toAddDummy or not realName in self.realToDummyDic:
+            self.ctr += 1
+            dummyName = self.header  + str(self.ctr)
+            self.dummyToRealDic[dummyName] = realName
+            self.realToDummyDic[realName] = self.realToDummyDic[realName] + [dummyName] \
+                                            if realName in self.realToDummyDic else [ dummyName ]
             
-        return dummyName 
-    
+            return dummyName 
+        else:
+            return self.realToDummyDic[realName] 
+
     def addAllContigs(self, contigsNamesList):
         for contigName in contigsNamesList:
             if not contigName in self.realToDummyDic:
@@ -49,10 +49,28 @@ class dummyNodeController(object):
             readingList.append(tmpPath)
         return readingList
 
-def extendConnectivityFromReads(condenseCandidatesList, connectingReadsList, contigsNamesList):
+    def createLocalR2DMapping(self, connectScoreList, toAddDummy):
+        tmpR2DDic = {}
+        tmpContigsList = [] 
+
+        for eachRecord in connectScoreList:
+            print connectScoreList
+            infoList = eachRecord[0].split("~")
+            tmpContigsList.append(infoList[0][0:-2])
+
+        tmpContigsList.append(infoList[1][0:-2])
+        
+        for eachContigName in tmpContigsList:
+            dummyName = self.addDummy(eachContigName, toAddDummy)
+            tmpR2DDic[eachContigName] = dummyName
+
+        return tmpR2DDic
+
+def extendConnectivityFromReads(candidatesStructList, connectingReadsList, contigsNamesList):
+    condenseCandidatesList = houseKeeperLib.extractMergeCandidStructToList(candidatesStructList)
     unUsedContigsDic = findUnUsedContigs(condenseCandidatesList, contigsNamesList)
-    setCoverList = findSetCoverBaseLine(unUsedContigsDic, connectingReadsList)
-    return setCoverList + condenseCandidatesList 
+    setCoverStructList = findSetCoverBaseLine(unUsedContigsDic, connectingReadsList)
+    return setCoverStructList + candidatesStructList 
 
 def findUnUsedContigs(condenseCandidatesList, contigsNamesList):
     # condenseCandidatesList == ['ContigDummyL_R~ContigDummyR_L~1']
@@ -66,7 +84,7 @@ def findUnUsedContigs(condenseCandidatesList, contigsNamesList):
     return unUsedContigsDic
 
 def findSetCoverBaseLine(unUsedContigsDic, connectingReadsList):
-    setCoverList, setRecords = [], transformConnectingReadsToSetStructure(connectingReadsList)
+    setCoverStructList, setRecords = [], transformConnectingReadsToSetStructure(connectingReadsList)
 
     setRecords.sort(key = itemgetter(2), reverse = True)
     for eachSetRecord in setRecords:
@@ -76,11 +94,11 @@ def findSetCoverBaseLine(unUsedContigsDic, connectingReadsList):
                 allNotUsed = False
 
         if allNotUsed:
-            setCoverList += eachSetRecord[1]
+            setCoverStructList += [eachSetRecord[1], True]
             for eachContigName in eachSetRecord[0]:
                 unUsedContigsDic[eachContigName] = False
 
-    return setCoverList
+    return setCoverStructList
 
 def findSetCoverGreedy(unUsedContigsDic, connectingReadsList):
     setCoverList, setRecords = [], transformConnectingReadsToSetStructure(connectingReadsList)
@@ -141,40 +159,21 @@ def convertPD2LR(pdContigName, side):
         print "Error : not pd"
         assert(False)
 
-def assignRepeatedNodesToDummy(scoreList):
+def assignRepeatedNodesToDummy(scoreStructList):
     scoreListWithDummy, dummyNodeDataRobot  = [], dummyNodeController()
-    # scoreList = [ ['ContigDummyL_R~ContigDummyR_L~1' , 1 , 1] ] 
-
-    for eachScoreItem in scoreList:
-        infoList = eachScoreItem[0].split("~")
-        name1 = dummyNodeDataRobot.tryAndAddDummyWithSide(infoList[0])
-        name2 = dummyNodeDataRobot.tryAndAddDummyWithSide(infoList[1])
-        mScore = infoList[2]
-        newName = name1  + "~" + name2 + "~" + mScore 
-        scoreListWithDummy.append([newName, eachScoreItem[1], eachScoreItem[2]])
-
+    
+    for eachScoreStruct in scoreStructList:
+        connectScoreList = eachScoreStruct[0]
+        toAddDummy = eachScoreStruct[1]
+        tmpDummyDic = dummyNodeDataRobot.createLocalR2DMapping(connectScoreList, toAddDummy)
+        
+        for eachScoreItem in connectScoreList:
+            infoList = eachScoreItem[0].split("~")
+            name1 = tmpDummyDic[infoList[0][0:-2]] +  infoList[0][-2:]
+            name2 = tmpDummyDic[infoList[1][0:-2]] +  infoList[1][-2:]
+            mScore = infoList[2]
+            newName = name1  + "~" + name2 + "~" + mScore 
+            scoreListWithDummy.append([newName, eachScoreItem[1], eachScoreItem[2]])
 
     return scoreListWithDummy, dummyNodeDataRobot
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

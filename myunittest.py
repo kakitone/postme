@@ -109,8 +109,9 @@ class baselineAlgoTest(unittest.TestCase):
     def test_findCondenseCandidatesList(self):
         spanReadsList, contigsNamesList = [['ContigDummyL_p', 'ContigDummyR_p', 'ReadDummy']], ['ContigDummyL', 'ContigDummyR']
         G = graphLib.formContigGraph(spanReadsList, contigsNamesList)
-        condenseCandidatesList = G.findCondenseCandidatesList()        
-        assert(condenseCandidatesList == ['ContigDummyL_R~ContigDummyR_L~1'])
+        condenseCandidatesList = G.findCondenseCandidatesList()  
+
+        assert(condenseCandidatesList == [[['ContigDummyL_R~ContigDummyR_L~1'], False]])
     
     def test_transformConnectingReadsToSetStructure(self):
         connectingReadsList = []
@@ -153,7 +154,8 @@ class baselineAlgoTest(unittest.TestCase):
         
         setCoverList = setCoverLib.findSetCoverBaseLine(unUsedContigsDic, connectingReadsList)
 
-        expectedSetCoverList = ['ContigDummyL_R~ContigDummyB1_L~3', 'ContigDummyB1_R~ContigDummyB2_R~3', 'ContigDummyB2_L~ContigDummyR_L~3']
+        expectedSetCoverList = [['ContigDummyL_R~ContigDummyB1_L~3', 'ContigDummyB1_R~ContigDummyB2_R~3', 'ContigDummyB2_L~ContigDummyR_L~3'], True]
+        
         assert(expectedSetCoverList == setCoverList)
 
     def test_findSetCoverGreedy(self):
@@ -196,7 +198,7 @@ class baselineAlgoTest(unittest.TestCase):
         assert(G.dicOfContigNodes['ContigDummyR'].readToContigCount == 0)
        
     def test_calculateConfidenceScore(self):
-        condenseCandidatesList = ['ContigDummyL_R~ContigDummyR_L~1']
+        condenseCandidatesList = [[['ContigDummyL_R~ContigDummyR_L~1'], False]]
         spanReadsList, contigsNamesList = [['ContigDummyL_p', 'ContigDummyR_p', 'ReadDummy']], ['ContigDummyL', 'ContigDummyR']
         
         dataList, contigList = [ [1, 6, 1, 6, 6, 6, 100.0, 6, 6, 'ContigDummyL', 'ReadDummy'] ], []
@@ -206,14 +208,15 @@ class baselineAlgoTest(unittest.TestCase):
 
         G = graphLib.formContigGraph(spanReadsList, contigsNamesList)        
         cTestLib.assignCoverageFromDataList(G, dataList, self.folderName, self.contigsFilename)
-        scoreList = cTestLib.calculateConfidenceScore(G, condenseCandidatesList)
+        scoreStructList = cTestLib.calculateConfidenceScore(G, condenseCandidatesList)
 
-        assert(scoreList[0][0] == 'ContigDummyL_R~ContigDummyR_L~1' )
-        assert(abs(scoreList[0][1] -  0.53846153846153844) < 0.01)
-        assert(scoreList[0][2] == 1)
+        assert(scoreStructList[0][0][0][0] == 'ContigDummyL_R~ContigDummyR_L~1' )
+        assert(abs(scoreStructList[0][0][0][1] -  0.53846153846153844) < 0.01)
+        assert(scoreStructList[0][0][0][2] == 1)
+        assert(scoreStructList[0][1] == False)
 
     def test_assignRepeatedNodesToDummy(self):
-        scoreList = [ ['ContigDummyL_R~ContigDummyR_L~1' , 1 , 1] ] 
+        scoreList = [[[['ContigDummyL_R~ContigDummyR_L~1' , 1 , 1]], False ] ] 
         scoreListWithDummy, dummyNodeDataRobot = setCoverLib.assignRepeatedNodesToDummy(scoreList)
         expectedScoreListWithDummy = [['Dummy0_R~Dummy1_L~1', 1, 1]]
 

@@ -5,6 +5,8 @@ Algorithm:
     1. Form the basic data structure
     2. Establish connectivity
 '''
+import houseKeeperLib
+
 class contigGraph(object):
     def __init__(self, contigsNamesList):
         self.dicOfContigNodes = {}
@@ -43,8 +45,8 @@ class contigGraph(object):
             potentialCondenseCandidates = self.dicOfContigNodes[contigName].findPotentialCondenseCandidateAtNode()
             condenseCandidatesList += self.confirmPotentialCondenseCandidates(potentialCondenseCandidates)
 
-        return list(set(condenseCandidatesList))
-    
+        return houseKeeperLib.removeRedundantList(condenseCandidatesList)
+        
     def confirmPotentialCondenseCandidates(self, potentialCondenseCandidates):
         myList = []
 
@@ -60,11 +62,11 @@ class contigGraph(object):
             if side == "L":
                 if len(self.dicOfContigNodes[contigName].leftEndContainer.connectedContigsDic) == 1:
                     mNum = len(self.dicOfContigNodes[contigName].leftEndContainer.connectedContigsDic.itervalues().next())
-                    myList.append(returnName + "~" + str(mNum)) 
+                    myList.append([[returnName + "~" + str(mNum)], False]) 
             else:
                 if len(self.dicOfContigNodes[contigName].rightEndContainer.connectedContigsDic) == 1:
                     mNum = len(self.dicOfContigNodes[contigName].rightEndContainer.connectedContigsDic.itervalues().next())
-                    myList.append(returnName + "~" + str(mNum))   
+                    myList.append([[returnName + "~" + str(mNum)], False])   
                     
         return myList
 
