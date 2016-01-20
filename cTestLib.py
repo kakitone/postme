@@ -33,7 +33,7 @@ def assignCoverageFromHeader(G, folderName, contigFileName, targetToSourceContig
 
 def calculateConfidenceScore(G, condenseCandidatesStructList):
     scoreList = []
-
+    
     for eachcandidatestruct in condenseCandidatesStructList:
         tmpStruct = [[], eachcandidatestruct[1]]
         for eachcandidate in eachcandidatestruct[0]:

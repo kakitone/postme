@@ -23,12 +23,12 @@ class dummyNodeController(object):
             
             return dummyName 
         else:
-            return self.realToDummyDic[realName] 
+            return self.realToDummyDic[realName][0] 
 
     def addAllContigs(self, contigsNamesList):
         for contigName in contigsNamesList:
             if not contigName in self.realToDummyDic:
-                self.addDummy(contigName)
+                self.addDummy(contigName, False)
 
     def R2DLookUp(self, realName):
         return self.realToDummyDic[realName]
@@ -54,7 +54,6 @@ class dummyNodeController(object):
         tmpContigsList = [] 
 
         for eachRecord in connectScoreList:
-            print connectScoreList
             infoList = eachRecord[0].split("~")
             tmpContigsList.append(infoList[0][0:-2])
 
@@ -70,7 +69,7 @@ def extendConnectivityFromReads(candidatesStructList, connectingReadsList, conti
     condenseCandidatesList = houseKeeperLib.extractMergeCandidStructToList(candidatesStructList)
     unUsedContigsDic = findUnUsedContigs(condenseCandidatesList, contigsNamesList)
     setCoverStructList = findSetCoverBaseLine(unUsedContigsDic, connectingReadsList)
-    return setCoverStructList + candidatesStructList 
+    return  candidatesStructList + setCoverStructList
 
 def findUnUsedContigs(condenseCandidatesList, contigsNamesList):
     # condenseCandidatesList == ['ContigDummyL_R~ContigDummyR_L~1']
@@ -94,7 +93,7 @@ def findSetCoverBaseLine(unUsedContigsDic, connectingReadsList):
                 allNotUsed = False
 
         if allNotUsed:
-            setCoverStructList += [eachSetRecord[1], True]
+            setCoverStructList.append([eachSetRecord[1], True])
             for eachContigName in eachSetRecord[0]:
                 unUsedContigsDic[eachContigName] = False
 
