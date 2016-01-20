@@ -114,7 +114,8 @@ def findSetCoverGreedy(unUsedContigsDic, connectingReadsList):
     toCoverSet = set(toCoverList)
     while len(toCoverSet) > 0:
         recordItem = findMostCostEffectiveSet(toCoverSet, setsToSelect) 
-        setCoverList.append([recordItem[1], True])
+        if len(recordItem[1]) > 0:
+            setCoverList.append([recordItem[1], True])
         toCoverSet = toCoverSet.difference(set(recordItem[0])) 
 
     return setCoverList
