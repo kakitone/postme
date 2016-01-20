@@ -68,7 +68,8 @@ class dummyNodeController(object):
 def extendConnectivityFromReads(candidatesStructList, connectingReadsList, contigsNamesList):
     condenseCandidatesList = houseKeeperLib.extractMergeCandidStructToList(candidatesStructList)
     unUsedContigsDic = findUnUsedContigs(condenseCandidatesList, contigsNamesList)
-    setCoverStructList = findSetCoverBaseLine(unUsedContigsDic, connectingReadsList)
+    #setCoverStructList = findSetCoverBaseLine(unUsedContigsDic, connectingReadsList)
+    setCoverStructList = findSetCoverGreedy(unUsedContigsDic, connectingReadsList)
     return  candidatesStructList + setCoverStructList
 
 def findUnUsedContigs(condenseCandidatesList, contigsNamesList):
@@ -113,7 +114,7 @@ def findSetCoverGreedy(unUsedContigsDic, connectingReadsList):
     toCoverSet = set(toCoverList)
     while len(toCoverSet) > 0:
         recordItem = findMostCostEffectiveSet(toCoverSet, setsToSelect) 
-        setCoverList += recordItem[1]
+        setCoverList.append([recordItem[1], True])
         toCoverSet = toCoverSet.difference(set(recordItem[0])) 
 
     return setCoverList
