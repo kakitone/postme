@@ -22,7 +22,7 @@ class dummyNodeController(object):
 
             if realName in self.realToDummyDic :
                 self.realToDummyDic[realName] = self.realToDummyDic[realName] + [dummyName]
-                self.artificialDummyList[dummyName] = True
+                self.artificialDummyDic[dummyName] = True
             else:
                 self.realToDummyDic[realName] = [ dummyName ]
                 
