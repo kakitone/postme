@@ -21,7 +21,7 @@ import rankingLib
 import readConnectivityLib
 import setCoverLib
 
-def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, useSpades, noAlignment, scoreListOutputName, outputContigsFilename, mScoreThres, conScoreThres):
+def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, useSpades, noAlignment, scoreListOutputName, outputContigsFilename, mScoreThres, conScoreThres, setCoverOption):
     outputHeader, splitNum, parallelNum = "readToContigHeader",  20, 20  
     contigsFilename, readsFilename= "tmp" + inputContigsFilename , "tmp" + inputReadsFilename
 
@@ -40,7 +40,9 @@ def mainFlow(folderName, mummerLink, inputContigsFilename, inputReadsFilename, u
     
     condenseCandidatesList = G.findCondenseCandidatesList()
 
-    potentialMergesList = setCoverLib.extendConnectivityFromReads(condenseCandidatesList, connectingReadsList, contigsNamesList)
+    multiplicityDic = G.findEdgeMultiplicity()
+
+    potentialMergesList = setCoverLib.extendConnectivityFromReads(condenseCandidatesList, connectingReadsList, contigsNamesList, setCoverOption, multiplicityDic)
     
     if useSpades == True:
         cTestLib.assignCoverageFromHeader(G, folderName, contigsFilename, targetToSourceContigsNamesDic)
@@ -64,6 +66,7 @@ parser.add_argument('-sn', '--scoreListOutputName', help= 'Output filename for s
 parser.add_argument('-on', '--outputContigsFilename', help= 'Output filename for the improved contigs in FASTA format', required=False)
 parser.add_argument('-ms', '--mScoreCutOff', help= 'Number of spanning reads cutoff', required=False)
 parser.add_argument('-cs', '--cScoreCutOff', help= 'Abundance confidence score cutoff', required=False)
+parser.add_argument('-co', '--setCoverOption', help= 'Set cover algorithms to be used', required=False)
 
 args = vars(parser.parse_args())
 folderName, mummerLink = houseKeeperLib.trailingFolderCorrection(args['outputFolder']) , houseKeeperLib.trailingFolderCorrection(args['alignmentPath'])
@@ -75,7 +78,8 @@ scoreListOutputName = args['scoreListOutputName'] if args['scoreListOutputName']
 outputContigsFilename = args['outputContigsFilename'] if args['outputContigsFilename'] != None else "improved.fasta"
 mScoreThres = int(args['mScoreCutOff']) if args['mScoreCutOff'] != None  else  2 
 conScoreThres = float(args['cScoreCutOff']) if args['cScoreCutOff'] != None  else  0.95
+setCoverOption = 'greedy' if args['setCoverOption'] == 'greedy' else 'baseline'
 
 t0 = time.time()
-mainFlow(folderName, mummerLink, contigsFilename, readsFilename, useSpades, noAlignment, scoreListOutputName, outputContigsFilename, mScoreThres, conScoreThres)
+mainFlow(folderName, mummerLink, contigsFilename, readsFilename, useSpades, noAlignment, scoreListOutputName, outputContigsFilename, mScoreThres, conScoreThres, setCoverOption)
 print  "Time", time.time() - t0

@@ -147,7 +147,10 @@ def rankAndMerge(folderName, contigsNamesList, contigsFilename, readsFilename, s
     
     scoreList.sort(key = itemgetter(-1, -2), reverse = True)
     houseKeeperLib.dumpDataToJson(folderName , scoreListOutputName, scoreList)
+    
     mergeList = cutOffToFormMergeList(scoreList, mScoreThres, conScoreThres )
+
+    dummyNodeDataRobot.removeUsedDummies(mergeList)
 
     dummyNodeDataRobot.addAllContigs(contigsNamesList)
     

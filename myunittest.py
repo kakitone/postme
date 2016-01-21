@@ -125,10 +125,13 @@ class baselineAlgoTest(unittest.TestCase):
         connectingReadsList.append(['ReadDummy', 'B', 'ContigDummyB2', contigDummyBRecord2])
         connectingReadsList.append(['ReadDummy', 'R', 'ContigDummyR', contigDummyRRecord])
 
-        setInfo =  setCoverLib.transformConnectingReadsToSetStructure(connectingReadsList)
+        multiplicityDic = {'ContigDummyL_R,ContigDummyB1_L' : 1, 'ContigDummyB1_R,ContigDummyB2_R' : 1, 'ContigDummyB2_L,ContigDummyR_L' : 1, \
+                           'ContigDummyB1_L,ContigDummyL_R' : 1, 'ContigDummyB2_R,ContigDummyB1_R' : 1, 'ContigDummyR_L,ContigDummyB2_L' : 1 }
+
+        setInfo =  setCoverLib.transformConnectingReadsToSetStructure(connectingReadsList, multiplicityDic)
 
         setOfElements = ['ContigDummyL', 'ContigDummyB1', 'ContigDummyB2', 'ContigDummyR']
-        linkageAlongList = ['ContigDummyL_R~ContigDummyB1_L~3', 'ContigDummyB1_R~ContigDummyB2_R~3', 'ContigDummyB2_L~ContigDummyR_L~3']
+        linkageAlongList = ['ContigDummyL_R~ContigDummyB1_L~1', 'ContigDummyB1_R~ContigDummyB2_R~1', 'ContigDummyB2_L~ContigDummyR_L~1']
         recordItem = [setOfElements, linkageAlongList, len(setOfElements)]
         expectedSetInfo = [recordItem]
 
@@ -152,9 +155,13 @@ class baselineAlgoTest(unittest.TestCase):
         connectingReadsList.append(['ReadDummy', 'B', 'ContigDummyB2', contigDummyBRecord2])
         connectingReadsList.append(['ReadDummy', 'R', 'ContigDummyR', contigDummyRRecord])
         
-        setCoverList = setCoverLib.findSetCoverBaseLine(unUsedContigsDic, connectingReadsList)
+        multiplicityDic = {'ContigDummyL_R,ContigDummyB1_L' : 1, 'ContigDummyB1_R,ContigDummyB2_R' : 1, 'ContigDummyB2_L,ContigDummyR_L' : 1, \
+                           'ContigDummyB1_L,ContigDummyL_R' : 1, 'ContigDummyB2_R,ContigDummyB1_R' : 1, 'ContigDummyR_L,ContigDummyB2_L' : 1 }
 
-        expectedSetCoverList = [[['ContigDummyL_R~ContigDummyB1_L~3', 'ContigDummyB1_R~ContigDummyB2_R~3', 'ContigDummyB2_L~ContigDummyR_L~3'], True]]
+
+        setCoverList = setCoverLib.findSetCoverBaseLine(unUsedContigsDic, connectingReadsList, multiplicityDic)
+
+        expectedSetCoverList = [[['ContigDummyL_R~ContigDummyB1_L~1', 'ContigDummyB1_R~ContigDummyB2_R~1', 'ContigDummyB2_L~ContigDummyR_L~1'], True]]
 
         assert(expectedSetCoverList == setCoverList)
 
@@ -175,9 +182,12 @@ class baselineAlgoTest(unittest.TestCase):
         connectingReadsList.append(['ReadDummy2', 'B', 'ContigDummyB2', contigDummyBRecord2])
         connectingReadsList.append(['ReadDummy2', 'B', 'ContigDummyB1', contigDummyBRecord3])
 
-        setCoverList = setCoverLib.findSetCoverGreedy(unUsedContigsDic, connectingReadsList)
+        multiplicityDic = {'ContigDummyL_R,ContigDummyB1_L' : 1, 'ContigDummyB1_R,ContigDummyR_L' : 1, 'ContigDummyB1_R,ContigDummyB2_R' : 1, \
+                           'ContigDummyB1_L,ContigDummyL_R' : 1, 'ContigDummyR_L,ContigDummyB1_R' : 1, 'ContigDummyB2_R,ContigDummyB1_R' : 1 }
+
+        setCoverList = setCoverLib.findSetCoverGreedy(unUsedContigsDic, connectingReadsList, multiplicityDic)
         
-        expectedSetCoverList =  [[['ContigDummyL_R~ContigDummyB1_L~3', 'ContigDummyB1_R~ContigDummyR_L~3'], True], [['ContigDummyB1_R~ContigDummyB2_R~3'], True]]
+        expectedSetCoverList =  [[['ContigDummyL_R~ContigDummyB1_L~1', 'ContigDummyB1_R~ContigDummyR_L~1'], True], [['ContigDummyB1_R~ContigDummyB2_R~1'], True]]
 
         assert(expectedSetCoverList == setCoverList)
 

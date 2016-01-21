@@ -10,6 +10,7 @@ class dummyNodeController(object):
         self.name = ""
         self.realToDummyDic = {}
         self.dummyToRealDic = {}
+        self.artificialDummyDic = {}
         self.header = "Dummy"
         self.ctr = -1
 
@@ -18,9 +19,13 @@ class dummyNodeController(object):
             self.ctr += 1
             dummyName = self.header  + str(self.ctr)
             self.dummyToRealDic[dummyName] = realName
-            self.realToDummyDic[realName] = self.realToDummyDic[realName] + [dummyName] \
-                                            if realName in self.realToDummyDic else [ dummyName ]
-            
+
+            if realName in self.realToDummyDic :
+                self.realToDummyDic[realName] = self.realToDummyDic[realName] + [dummyName]
+                self.artificialDummyList[dummyName] = True
+            else:
+                self.realToDummyDic[realName] = [ dummyName ]
+                
             return dummyName 
         else:
             return self.realToDummyDic[realName][0] 
@@ -65,11 +70,30 @@ class dummyNodeController(object):
 
         return tmpR2DDic
 
-def extendConnectivityFromReads(candidatesStructList, connectingReadsList, contigsNamesList):
+    def removeUsedDummies(self, mergeList):
+        usedDummyDic = { eachDummyName: False for eachDummyName in self.artificialDummyDic}
+        for eachMerge in mergeList:
+            infoList = eachMerge[0].split("~")
+            usedDummyDic[infoList[0][0:-2]] = True
+            usedDummyDic[infoList[1][0:-2]] = True
+
+        for eachDummyName in usedDummyDic: 
+            if usedDummyDic[eachDummyName] == False:
+                realContigName = self.dummyToRealDic[eachDummyName]
+                self.dummyToRealDic.pop(eachDummyName)
+                self.realToDummyDic[realContigName].remove(eachDummyName)
+
+def extendConnectivityFromReads(candidatesStructList, connectingReadsList, contigsNamesList, setCoverOption, multiplicityDic):
     condenseCandidatesList = houseKeeperLib.extractMergeCandidStructToList(candidatesStructList)
     unUsedContigsDic = findUnUsedContigs(condenseCandidatesList, contigsNamesList)
-    #setCoverStructList = findSetCoverBaseLine(unUsedContigsDic, connectingReadsList)
-    setCoverStructList = findSetCoverGreedy(unUsedContigsDic, connectingReadsList)
+    if setCoverOption == 'greedy':
+        setCoverStructList = findSetCoverGreedy(unUsedContigsDic, connectingReadsList, multiplicityDic) 
+    elif setCoverOption == 'baseline':
+        setCoverStructList = findSetCoverBaseLine(unUsedContigsDic, connectingReadsList, multiplicityDic)
+    else:
+        print "Error : wrong set cover option"
+        assert(False)
+
     return  candidatesStructList + setCoverStructList
 
 def findUnUsedContigs(condenseCandidatesList, contigsNamesList):
@@ -83,8 +107,8 @@ def findUnUsedContigs(condenseCandidatesList, contigsNamesList):
     
     return unUsedContigsDic
 
-def findSetCoverBaseLine(unUsedContigsDic, connectingReadsList):
-    setCoverStructList, setRecords = [], transformConnectingReadsToSetStructure(connectingReadsList)
+def findSetCoverBaseLine(unUsedContigsDic, connectingReadsList, multiplicityDic):
+    setCoverStructList, setRecords = [], transformConnectingReadsToSetStructure(connectingReadsList, multiplicityDic)
 
     setRecords.sort(key = itemgetter(2), reverse = True)
     for eachSetRecord in setRecords:
@@ -100,8 +124,8 @@ def findSetCoverBaseLine(unUsedContigsDic, connectingReadsList):
 
     return setCoverStructList
 
-def findSetCoverGreedy(unUsedContigsDic, connectingReadsList):
-    setCoverList, setRecords = [], transformConnectingReadsToSetStructure(connectingReadsList)
+def findSetCoverGreedy(unUsedContigsDic, connectingReadsList, multiplicityDic):
+    setCoverList, setRecords = [], transformConnectingReadsToSetStructure(connectingReadsList, multiplicityDic)
     toCoverList, setsToSelect, currentCoveredList = [], [], []
     
     for eachContig in unUsedContigsDic:
@@ -133,7 +157,7 @@ def findMostCostEffectiveSet(toCoverSet, setsToSelect):
 def penalizeSingleton(record):
     return -0.5 if record[-1] < 0 else 0
 
-def transformConnectingReadsToSetStructure(connectingReadsList):
+def transformConnectingReadsToSetStructure(connectingReadsList, multiplicityDic):
     # Input :  connectingReadsList.append(['ReadDummy', 'B', 'ContigDummyB1', contigDummyBRecord1])
     # Output : [['Contig1', 'Contig2', 'Contig3'], [['Contig1_L', 'Contig2_R'], ['Contig2_L', 'Contig3_R']] ]
     spanReadsInfoList, linkedContigsInfoList = readConnectivityLib.extractInfoFromSpanRead(connectingReadsList)
@@ -144,7 +168,9 @@ def transformConnectingReadsToSetStructure(connectingReadsList):
             linkList[0].append(eachContig[0:-2])
 
         for i in range(len(eachlinkedInfo[0]) - 1):
-            linkList[1].append(convertPD2LR(eachlinkedInfo[0][i], "R") + "~" + convertPD2LR(eachlinkedInfo[0][i+1], "L") + "~" + "3")
+            starter, ender = convertPD2LR(eachlinkedInfo[0][i], "R"), convertPD2LR(eachlinkedInfo[0][i+1], "L")
+            mScore = str(multiplicityDic[starter + "," + ender])
+            linkList[1].append(starter + "~" + ender + "~" + mScore)
 
         linkList[2] = len(eachlinkedInfo[0])
         setStructures.append(linkList)

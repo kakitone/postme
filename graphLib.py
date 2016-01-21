@@ -69,6 +69,19 @@ class contigGraph(object):
                     myList.append([[returnName + "~" + str(mNum)], False])   
                     
         return myList
+        
+    def findEdgeMultiplicity(self):
+        multiplicityDic =  {}
+        for contigName in self.dicOfContigNodes:
+            myContainer = self.dicOfContigNodes[contigName].leftEndContainer.myName
+            for neighborName in myContainer.connectedContigsDic:
+                multiplicityDic[myContainer.myName + "," + neighborName] = len(myContainer.connectedContigsDic[neighborName])
+
+            myContainer = self.dicOfContigNodes[contigName].rightEndContainer.myName
+            for neighborName in myContainer.connectedContigsDic:
+                multiplicityDic[myContainer.myName + "," + neighborName] = len(myContainer.connectedContigsDic[neighborName])
+
+        return multiplicityDic
 
 class contigNode(object):
     def __init__(self, contigName):
