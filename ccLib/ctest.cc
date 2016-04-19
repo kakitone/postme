@@ -1,5 +1,6 @@
 // You will need Boost library : sudo port install boost 
- 
+// g++ ctest.cc ctestlib.cc -o ctest 
+// ./ctest 
 #include <iostream>
 using namespace std;
 #include "ctestlib.h"
