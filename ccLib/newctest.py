@@ -88,6 +88,10 @@ def simulation(l1List, l2List , L):
 	ROCLogDiffx3, ROCLogDiffy3 = findResultByMetric(resultList, "min", TP)
 
 	if True:
+		resultList.sort(key=itemgetter(6), reverse = True)
+		for i in range(10):
+			print i*numberOfRounds, resultList[i*numberOfRounds/10],  ROCLogDiffx1[i*numberOfRounds/10], ROCLogDiffy1[i*numberOfRounds/10]
+
 		plt.scatter(ROCLogDiffx1, ROCLogDiffy1, color = 'r')
 		plt.scatter(ROCLogDiffx2, ROCLogDiffy2, color = 'g')
 		plt.scatter(ROCLogDiffx3, ROCLogDiffy3, color = 'b', marker='x')
