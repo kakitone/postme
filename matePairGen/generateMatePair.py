@@ -10,8 +10,8 @@ filename = ""
 def convertLR2MP(folderName, longReadFilename, pairEndOutputHeader, readLength, gapLength): 
 	'''
 	Goal : convert Long reads into matepair library. 
-	Input :  longread.fasta
-	Output : pair_1.fasta, pair_2.fasta
+	Input :  longread.fasta, readLength, gapLength
+	Output : pair_1.fastq, pair_2.fastq
 	'''
 	pairEnd1List, pairEnd2List = [], []
 
@@ -40,7 +40,7 @@ def unitTest():
 
 	SeqIO.write([SeqRecord(Seq("ACCTTTGGA", generic_dna), description="", id="segkk_0")], folderName + longReadFilename  , "fasta")
 	
-	### Test 1 
+	### Test 1 : standard usage
 	gapLength = 3
 	convertLR2MP(folderName, longReadFilename, pairEndOutputHeader, readLength, gapLength)
 	
@@ -58,7 +58,7 @@ def unitTest():
 	assert(str2 == "TCC")
 	assert(qual2 == [40 , 40, 40])
 
-	### Test 2 
+	### Test 2 : gap too long
 	gapLength = 4
 	convertLR2MP(folderName, longReadFilename, pairEndOutputHeader, readLength, gapLength)
 
@@ -66,7 +66,7 @@ def unitTest():
 	assert(len(list(SeqIO.parse(folderName + pairEndOutputHeader + "_2.fastq", "fastq"))) == 0) 
 
 
-	### Test 3 
+	### Test 3 : small gap
 	gapLength = 2
 	convertLR2MP(folderName, longReadFilename, pairEndOutputHeader, readLength, gapLength)
 	
@@ -89,7 +89,7 @@ def unitTest():
 unitTest()
 
 
-
+'''
 folderName = "/home/kakitone/Apr29-2016/datafolder3/"
 longReadFilename = "EC.fasta"
 readLength = 100
@@ -98,7 +98,7 @@ for gapLength in [600, 1200, 1800, 2400, 3000]:
 	pairEndOutputHeader = "pairGap" + str(gapLength)
 	convertLR2MP(folderName, longReadFilename, pairEndOutputHeader, readLength, gapLength)
 
-
+'''
 
 
 
